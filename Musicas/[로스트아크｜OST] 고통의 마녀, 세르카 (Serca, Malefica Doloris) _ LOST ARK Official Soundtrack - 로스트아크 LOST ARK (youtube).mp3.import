@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://drxwb871dofkm"
+path="res://.godot/imported/[로스트아크｜OST] 고통의 마녀, 세르카 (Serca, Malefica Doloris) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3-222d260da086d5429712f962ba9ef410.mp3str"
+
+[deps]
+
+source_file="res://Musicas/[로스트아크｜OST] 고통의 마녀, 세르카 (Serca, Malefica Doloris) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3"
+dest_files=["res://.godot/imported/[로스트아크｜OST] 고통의 마녀, 세르카 (Serca, Malefica Doloris) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3-222d260da086d5429712f962ba9ef410.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://bpjpto7ownwe8"]
+
+[ext_resource type="Shader" uid="uid://bfsici7crqvji" path="res://Shaders_Efeitos/boreal.gdshader" id="1_gab0w"]
+[ext_resource type="Texture2D" uid="uid://8d4tqa3vcq0n" path="res://Mundos/cenario.png" id="1_qi0ky"]
+[ext_resource type="Shader" uid="uid://1f13fi2w81c6" path="res://Shaders_Efeitos/tempestade_neve.gdshader" id="2_0q8jj"]
+[ext_resource type="Shader" uid="uid://bu8vcek0co4pl" path="res://Shaders_Efeitos/estrelas.gdshader" id="3_3ldwi"]
+[ext_resource type="Texture2D" uid="uid://bhar1bvfk63kg" path="res://Entidades/Silvana/silvana.png" id="4_78w70"]
+[ext_resource type="AudioStream" uid="uid://drxwb871dofkm" path="res://Musicas/[로스트아크｜OST] 고통의 마녀, 세르카 (Serca, Malefica Doloris) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3" id="5_3ldwi"]
+[ext_resource type="Texture2D" uid="uid://dytynopsitms5" path="res://UI/Barra_boss.png" id="7_q44uo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qi0ky"]
+shader = ExtResource("1_gab0w")
+shader_parameter/color_top = Color(0, 1, 0.7, 0.3)
+shader_parameter/color_mid = Color(0.2, 0.8, 1, 0.5)
+shader_parameter/color_bottom = Color(0.4, 0.1, 1, 0.2)
+shader_parameter/speed = 3.0
+shader_parameter/wave_frequency = 3.0
+shader_parameter/wave_complexity = 6.0
+shader_parameter/vertical_smoothness = 0.4
+shader_parameter/horizontal_edge_fade = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6rgyr"]
+shader = ExtResource("3_3ldwi")
+shader_parameter/star_color = Color(1, 1, 1, 1)
+shader_parameter/star_speed = 0.01
+shader_parameter/twinkle_speed = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ldwi"]
+shader = ExtResource("2_0q8jj")
+shader_parameter/layers = 2
+shader_parameter/density = 80.0
+shader_parameter/wind_direction = Vector2(-1.5, 0.5)
+shader_parameter/speed = 1.5
+shader_parameter/wave_amplitude = 0.5
+shader_parameter/wave_frequency = 2.0
+shader_parameter/particle_size = 0.09
+shader_parameter/snow_color = Color(1, 1, 1, 0.9)
+
+[node name="Teste" type="Node2D" unique_id=658679012]
+
+[node name="mapa" type="Node2D" parent="." unique_id=1078966595]
+
+[node name="back" type="Sprite2D" parent="mapa" unique_id=1742548849]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(240, 135)
+texture = ExtResource("1_qi0ky")
+
+[node name="boreal" type="ColorRect" parent="mapa/back" unique_id=1897435695]
+material = SubResource("ShaderMaterial_qi0ky")
+offset_left = -199.0
+offset_top = -174.0
+offset_right = 237.0
+offset_bottom = 31.0
+
+[node name="estrelas" type="ColorRect" parent="mapa/back/boreal" unique_id=1258232730]
+material = SubResource("ShaderMaterial_6rgyr")
+layout_mode = 0
+offset_left = -41.0
+offset_top = 39.0
+offset_right = 438.0
+offset_bottom = 308.0
+
+[node name="Sprite2D" type="Sprite2D" parent="mapa/back/boreal" unique_id=68503943]
+texture_filter = 1
+position = Vector2(387.00003, 229)
+scale = Vector2(0.7091837, 0.7070313)
+texture = ExtResource("4_78w70")
+
+[node name="tempestade_de_neve" type="ColorRect" parent="mapa/back" unique_id=1975925190]
+material = SubResource("ShaderMaterial_3ldwi")
+offset_left = -239.0
+offset_top = -135.0
+offset_right = 241.0
+offset_bottom = 134.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2143602960]
+stream = ExtResource("5_3ldwi")
+volume_db = -10.947
+autoplay = true
+
+[node name="BarraBoss" type="Sprite2D" parent="." unique_id=2114778125]
+texture_filter = 1
+position = Vector2(244.00002, 21)
+scale = Vector2(0.5901961, 0.7105263)
+texture = ExtResource("7_q44uo")
