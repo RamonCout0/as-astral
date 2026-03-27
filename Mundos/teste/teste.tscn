@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bhar1bvfk63kg" path="res://Entidades/Silvana/silvana.png" id="4_78w70"]
 [ext_resource type="AudioStream" uid="uid://drxwb871dofkm" path="res://Musicas/[로스트아크｜OST] 고통의 마녀, 세르카 (Serca, Malefica Doloris) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3" id="5_3ldwi"]
 [ext_resource type="Texture2D" uid="uid://dytynopsitms5" path="res://UI/Barra_boss.png" id="7_q44uo"]
+[ext_resource type="PackedScene" uid="uid://cqlkwova4r0iq" path="res://Assets/Player/Cena/player.tscn" id="8_q44uo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qi0ky"]
 shader = ExtResource("1_gab0w")
@@ -35,6 +36,9 @@ shader_parameter/wave_amplitude = 0.5
 shader_parameter/wave_frequency = 2.0
 shader_parameter/particle_size = 0.09
 shader_parameter/snow_color = Color(1, 1, 1, 0.9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q44uo"]
+size = Vector2(478, 34)
 
 [node name="Teste" type="Node2D" unique_id=658679012]
 
@@ -67,6 +71,9 @@ position = Vector2(387.00003, 229)
 scale = Vector2(0.7091837, 0.7070313)
 texture = ExtResource("4_78w70")
 
+[node name="Player" parent="mapa/back/boreal" unique_id=1148920940 instance=ExtResource("8_q44uo")]
+position = Vector2(4, 237)
+
 [node name="tempestade_de_neve" type="ColorRect" parent="mapa/back" unique_id=1975925190]
 material = SubResource("ShaderMaterial_3ldwi")
 offset_left = -239.0
@@ -84,3 +91,9 @@ texture_filter = 1
 position = Vector2(244.00002, 21)
 scale = Vector2(0.5901961, 0.7105263)
 texture = ExtResource("7_q44uo")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=68793476]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1138602383]
+position = Vector2(240, 253)
+shape = SubResource("RectangleShape2D_q44uo")
