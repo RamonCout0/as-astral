@@ -156,3 +156,22 @@ func update_animations():
 			anim.play("Jump")
 		else:
 			anim.play("fall")
+
+
+func _on_attack_hitbox_area_entered(area):
+	# Se a área que atingimos for a 'Hurtbox' de um Boss
+	if area.name == "Hurtbox":
+		var boss = area.get_parent() # Pega o nó BossTeste
+		if boss.has_method("take_damage"):
+			# Golpe normal dá 20, se for o segundo golpe do combo dá 40!
+			var damage = 100.0 if combo_step == 1 else 200
+			boss.take_damage(damage)
+
+
+func _on_attack_hitbox_body_entered(body):
+	# Verifica se o corpo que entrou está no grupo "boss"
+	if body.is_in_group("boss"):
+		if body.has_method("take_damage"):
+			var damage = 100.0 if combo_step <= 1 else 200.0
+			body.take_damage(damage)
+			print("Bateu no corpo do Boss! Dano: ", damage)

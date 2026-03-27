@@ -4,9 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://8d4tqa3vcq0n" path="res://Mundos/cenario.png" id="1_qi0ky"]
 [ext_resource type="Shader" uid="uid://1f13fi2w81c6" path="res://Shaders_Efeitos/tempestade_neve.gdshader" id="2_0q8jj"]
 [ext_resource type="Shader" uid="uid://bu8vcek0co4pl" path="res://Shaders_Efeitos/estrelas.gdshader" id="3_3ldwi"]
-[ext_resource type="Texture2D" uid="uid://bhar1bvfk63kg" path="res://Entidades/Silvana/silvana.png" id="4_78w70"]
 [ext_resource type="AudioStream" uid="uid://drxwb871dofkm" path="res://Musicas/[로스트아크｜OST] 고통의 마녀, 세르카 (Serca, Malefica Doloris) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3" id="5_3ldwi"]
-[ext_resource type="Texture2D" uid="uid://dytynopsitms5" path="res://UI/Barra_boss.png" id="7_q44uo"]
+[ext_resource type="PackedScene" uid="uid://cvvtf1t0i3sub" path="res://Mundos/teste/boss_teste.tscn" id="5_78w70"]
+[ext_resource type="Texture2D" uid="uid://dek6xw41xrfr0" path="res://Assets/Boss/bruxa.png" id="6_edhv1"]
+[ext_resource type="Texture2D" uid="uid://6arhby255gam" path="res://Assets/Boss/Armotheus.png" id="7_qtyh8"]
+[ext_resource type="Texture2D" uid="uid://bnjyskfyed8am" path="res://Assets/meme/Felipão.png" id="8_2k310"]
+[ext_resource type="PackedScene" uid="uid://dggilkv3yeli0" path="res://UI/boss_hud.tscn" id="8_edhv1"]
 [ext_resource type="PackedScene" uid="uid://cqlkwova4r0iq" path="res://Assets/Player/Cena/player.tscn" id="8_q44uo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qi0ky"]
@@ -44,20 +47,20 @@ size = Vector2(478, 34)
 
 [node name="mapa" type="Node2D" parent="." unique_id=1078966595]
 
-[node name="back" type="Sprite2D" parent="mapa" unique_id=1742548849]
+[node name="background" type="Sprite2D" parent="mapa" unique_id=1742548849]
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(240, 135)
 texture = ExtResource("1_qi0ky")
 
-[node name="boreal" type="ColorRect" parent="mapa/back" unique_id=1897435695]
+[node name="boreal" type="ColorRect" parent="mapa/background" unique_id=1897435695]
 material = SubResource("ShaderMaterial_qi0ky")
 offset_left = -199.0
 offset_top = -174.0
 offset_right = 237.0
 offset_bottom = 31.0
 
-[node name="estrelas" type="ColorRect" parent="mapa/back/boreal" unique_id=1258232730]
+[node name="estrelas" type="ColorRect" parent="mapa/background/boreal" unique_id=1258232730]
 material = SubResource("ShaderMaterial_6rgyr")
 layout_mode = 0
 offset_left = -41.0
@@ -65,16 +68,28 @@ offset_top = 39.0
 offset_right = 438.0
 offset_bottom = 308.0
 
-[node name="Sprite2D" type="Sprite2D" parent="mapa/back/boreal" unique_id=68503943]
-texture_filter = 1
-position = Vector2(387.00003, 229)
-scale = Vector2(0.7091837, 0.7070313)
-texture = ExtResource("4_78w70")
-
-[node name="Player" parent="mapa/back/boreal" unique_id=1148920940 instance=ExtResource("8_q44uo")]
+[node name="Player" parent="mapa/background/boreal" unique_id=1148920940 instance=ExtResource("8_q44uo")]
 position = Vector2(4, 237)
 
-[node name="tempestade_de_neve" type="ColorRect" parent="mapa/back" unique_id=1975925190]
+[node name="BossTeste" parent="mapa/background/boreal" unique_id=104191071 instance=ExtResource("5_78w70")]
+position = Vector2(260, 215)
+
+[node name="Sprite2D" type="Sprite2D" parent="mapa/background/boreal" unique_id=437370603]
+position = Vector2(367.00003, 144)
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("6_edhv1")
+
+[node name="Sprite2D2" type="Sprite2D" parent="mapa/background/boreal" unique_id=193713813]
+position = Vector2(242, 156)
+texture = ExtResource("7_qtyh8")
+
+[node name="Sprite2D3" type="Sprite2D" parent="mapa/background/boreal" unique_id=566845913]
+visible = false
+position = Vector2(125, 243)
+scale = Vector2(0.48000008, 0.6864342)
+texture = ExtResource("8_2k310")
+
+[node name="tempestade_de_neve" type="ColorRect" parent="mapa/background" unique_id=1975925190]
 material = SubResource("ShaderMaterial_3ldwi")
 offset_left = -239.0
 offset_top = -135.0
@@ -85,15 +100,12 @@ offset_bottom = 134.0
 stream = ExtResource("5_3ldwi")
 volume_db = -10.947
 autoplay = true
-
-[node name="BarraBoss" type="Sprite2D" parent="." unique_id=2114778125]
-texture_filter = 1
-position = Vector2(244.00002, 21)
-scale = Vector2(0.5901961, 0.7105263)
-texture = ExtResource("7_q44uo")
+parameters/looping = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=68793476]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1138602383]
 position = Vector2(240, 253)
 shape = SubResource("RectangleShape2D_q44uo")
+
+[node name="BossHUD" parent="." unique_id=16042669 instance=ExtResource("8_edhv1")]

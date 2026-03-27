@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cvvtf1t0i3sub"]
+
+[ext_resource type="Script" uid="uid://dy1f8u20eq1kf" path="res://boss_teste.gd" id="1_bu052"]
+[ext_resource type="Texture2D" uid="uid://dfqupyffqvl25" path="res://Assets/Boss/armotheus true forme.png" id="2_njwc8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bj8ra"]
+size = Vector2(51.75, 103)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s52rb"]
+radius = 62.008064
+
+[node name="BossTeste" type="CharacterBody2D" unique_id=104191071]
+script = ExtResource("1_bu052")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=42582934]
+texture_filter = 1
+texture = ExtResource("2_njwc8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1373026774]
+position = Vector2(-9.125, 2.5)
+shape = SubResource("RectangleShape2D_bj8ra")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2135351415]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1258446078]
+position = Vector2(-4, 14)
+shape = SubResource("CircleShape2D_s52rb")
