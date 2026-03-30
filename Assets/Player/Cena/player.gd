@@ -14,6 +14,7 @@ var is_attacking = false
 var is_dashing = false
 var is_grabbing = false
 var can_dash = true
+var is_countering := false
 
 # --- COMBO ---
 var combo_step = 0
@@ -26,8 +27,11 @@ const COMBO_WINDOW = 0.6
 @onready var hitbox_area = $AttackHitbox
 @onready var attack_hitbox = $AttackHitbox/CollisionShape2D
 
+
+
 func _ready():
 	attack_hitbox.disabled = true
+	anim.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta):
 	if combo_timer > 0:
@@ -54,6 +58,7 @@ func _physics_process(delta):
 
 	move_and_slide()
 	update_animations()
+	handle_counter()
 
 func handle_movement():
 	var direction = Input.get_axis("ui_left", "ui_right")
@@ -108,6 +113,8 @@ func _on_dash_timer_timeout():
 	can_dash = true
 
 func handle_attack():
+	
+
 	if Input.is_action_just_pressed("attack"):
 		if is_attacking:
 			return
@@ -125,6 +132,16 @@ func handle_attack():
 			combo_step = 1
 			anim.play("attack1")
 
+func handle_counter():
+	if Input.is_action_just_pressed("counter") and not is_countering and not is_attacking and not is_dashing:
+		is_countering = true
+		anim.play("counter")
+		EventBus.player_counter_pressed.emit()
+
+func finalizar_counter():
+	is_countering = false
+	
+
 # --- FUNÇÕES DE ANIMAÇÃO (Call Method Track) ---
 func ativar_hitbox():
 	attack_hitbox.disabled = false
@@ -139,6 +156,12 @@ func finalizar_ataque():
 func update_animations():
 	if is_attacking:
 		return
+	
+	if is_countering:
+		if anim.current_animation != "counter":
+			is_countering = false
+		else:
+			return
 
 	if is_dashing:
 		anim.play("Dash")
@@ -164,7 +187,7 @@ func _on_attack_hitbox_area_entered(area):
 		var boss = area.get_parent() # Pega o nó BossTeste
 		if boss.has_method("take_damage"):
 			# Golpe normal dá 20, se for o segundo golpe do combo dá 40!
-			var damage = 100.0 if combo_step == 1 else 200
+			var damage = 1000.0 if combo_step == 1 else 2000.0
 			boss.take_damage(damage)
 
 
@@ -172,6 +195,12 @@ func _on_attack_hitbox_body_entered(body):
 	# Verifica se o corpo que entrou está no grupo "boss"
 	if body.is_in_group("boss"):
 		if body.has_method("take_damage"):
-			var damage = 100.0 if combo_step <= 1 else 200.0
+			var damage = 1000.0 if combo_step <= 1 else 2000.0
 			body.take_damage(damage)
 			print("Bateu no corpo do Boss! Dano: ", damage)
+			
+func _on_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "counter":
+		finalizar_counter()
+	if anim_name == "attack1" or anim_name == "attack2":
+		finalizar_ataque()

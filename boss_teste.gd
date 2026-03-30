@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 # --- Variáveis de Vida (Sistema Personalizado) ---
 @export_group("Configurações de Vida")
-@export var max_health: float = 8500.0
-@export var health_per_segment: float = 50.0 # Quantidade de vida por "barra" ou segmento
+@export var max_health: float = 304000.0
+@export var health_per_segment: float = 1000.0 # Quantidade de vida por "barra" ou segmento
 var current_health: float
 
 # --- Outras Variáveis ---

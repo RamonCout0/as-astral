@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bns87d4kqjy85"]
+
+[ext_resource type="Script" uid="uid://b7ltsh403f06" path="res://silvanna.gd" id="1_oj3uq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fynej"]
+radius = 22.0
+height = 82.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ahek"]
+size = Vector2(37, 72)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=574496391]
+script = ExtResource("1_oj3uq")
+
+[node name="Sprite" type="ColorRect" parent="." unique_id=1629572973]
+offset_right = 40.0
+offset_bottom = 72.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=478228752]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1438779925]
+position = Vector2(20, 34)
+shape = SubResource("CapsuleShape2D_fynej")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=55126207]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1513420342]
+position = Vector2(20, 36)
+shape = SubResource("RectangleShape2D_4ahek")
+
+[node name="LaserCast" type="RayCast2D" parent="." unique_id=1163758854]
+target_position = Vector2(0, 148)
+
+[node name="LaserLine" type="Line2D" parent="." unique_id=3724288]
+position = Vector2(2, 0)
