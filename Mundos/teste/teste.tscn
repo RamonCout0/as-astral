@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bpjpto7ownwe8"]
 
+[ext_resource type="Texture2D" uid="uid://b1ilhxaxy210d" path="res://Mundos/teste/cenario3.png" id="1_2k310"]
 [ext_resource type="Shader" uid="uid://bfsici7crqvji" path="res://Shaders_Efeitos/boreal.gdshader" id="1_gab0w"]
-[ext_resource type="Texture2D" uid="uid://8d4tqa3vcq0n" path="res://Mundos/cenario.png" id="1_qi0ky"]
 [ext_resource type="Shader" uid="uid://1f13fi2w81c6" path="res://Shaders_Efeitos/tempestade_neve.gdshader" id="2_0q8jj"]
 [ext_resource type="Shader" uid="uid://bu8vcek0co4pl" path="res://Shaders_Efeitos/estrelas.gdshader" id="3_3ldwi"]
 [ext_resource type="AudioStream" uid="uid://drxwb871dofkm" path="res://Musicas/[로스트아크｜OST] 고통의 마녀, 세르카 (Serca, Malefica Doloris) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3" id="5_3ldwi"]
@@ -11,6 +11,17 @@
 [ext_resource type="Texture2D" uid="uid://bnjyskfyed8am" path="res://Assets/meme/Felipão.png" id="8_2k310"]
 [ext_resource type="PackedScene" uid="uid://dggilkv3yeli0" path="res://UI/boss_hud.tscn" id="8_edhv1"]
 [ext_resource type="PackedScene" uid="uid://cqlkwova4r0iq" path="res://Assets/Player/Cena/player.tscn" id="8_q44uo"]
+[ext_resource type="Shader" uid="uid://bylvdmycv0t53" path="res://Shaders_Efeitos/aura.gdshader" id="12_gs6ou"]
+[ext_resource type="Shader" uid="uid://l7a8eodn1c3v" path="res://Shaders_Efeitos/rascunho.gdshader" id="13_30m1w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q44uo"]
+size = Vector2(1024, 102)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gs6ou"]
+size = Vector2(41.5, 408.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_30m1w"]
+size = Vector2(940, 67.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qi0ky"]
 shader = ExtResource("1_gab0w")
@@ -25,7 +36,9 @@ shader_parameter/horizontal_edge_fade = 0.2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6rgyr"]
 shader = ExtResource("3_3ldwi")
-shader_parameter/star_color = Color(1, 1, 1, 1)
+shader_parameter/color_1 = Color(1, 1, 1, 1)
+shader_parameter/color_2 = Color(0.6, 0.8, 1, 1)
+shader_parameter/color_3 = Color(1, 0.9, 0.5, 1)
 shader_parameter/star_speed = 0.01
 shader_parameter/twinkle_speed = 3.0
 
@@ -40,8 +53,30 @@ shader_parameter/wave_frequency = 2.0
 shader_parameter/particle_size = 0.09
 shader_parameter/snow_color = Color(1, 1, 1, 0.9)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q44uo"]
-size = Vector2(478, 34)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2k310"]
+shader = ExtResource("3_3ldwi")
+shader_parameter/color_1 = Color(1, 1, 1, 1)
+shader_parameter/color_2 = Color(0.6, 0.8, 1, 1)
+shader_parameter/color_3 = Color(1, 0.9, 0.5, 1)
+shader_parameter/star_speed = 0.01
+shader_parameter/twinkle_speed = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_30m1w"]
+shader = ExtResource("12_gs6ou")
+shader_parameter/aura_color = Color(0.4, 0, 0.8, 1)
+shader_parameter/aura_size = 0.32800001558
+shader_parameter/edge_softness = 0.5
+shader_parameter/pulse_speed = 2.0
+shader_parameter/wave_intensity = 0.03
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ilq6"]
+shader = ExtResource("13_30m1w")
+shader_parameter/pencil_color = Color(0.2, 0.2, 0.2, 1)
+shader_parameter/sketch_intensity = 4.0
+shader_parameter/stroke_density = 400.0
+shader_parameter/stroke_chaos = 2.0
+shader_parameter/border_size = 0.3
+shader_parameter/border_softness = 0.5150000244625
 
 [node name="Teste" type="Node2D" unique_id=658679012]
 
@@ -50,62 +85,112 @@ size = Vector2(478, 34)
 [node name="background" type="Sprite2D" parent="mapa" unique_id=1742548849]
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(240, 135)
-texture = ExtResource("1_qi0ky")
+position = Vector2(242, 138)
+texture = ExtResource("1_2k310")
 
-[node name="boreal" type="ColorRect" parent="mapa/background" unique_id=1897435695]
-material = SubResource("ShaderMaterial_qi0ky")
-offset_left = -199.0
-offset_top = -174.0
-offset_right = 237.0
-offset_bottom = 31.0
+[node name="Player" parent="mapa" unique_id=1148920940 instance=ExtResource("8_q44uo")]
+position = Vector2(27, 197)
 
-[node name="estrelas" type="ColorRect" parent="mapa/background/boreal" unique_id=1258232730]
-material = SubResource("ShaderMaterial_6rgyr")
-layout_mode = 0
-offset_left = -41.0
-offset_top = 39.0
-offset_right = 438.0
-offset_bottom = 308.0
+[node name="BossTeste" parent="mapa" unique_id=104191071 instance=ExtResource("5_78w70")]
+position = Vector2(322, 232)
 
-[node name="Player" parent="mapa/background/boreal" unique_id=1148920940 instance=ExtResource("8_q44uo")]
-position = Vector2(4, 237)
-
-[node name="BossTeste" parent="mapa/background/boreal" unique_id=104191071 instance=ExtResource("5_78w70")]
-position = Vector2(260, 215)
-
-[node name="Sprite2D" type="Sprite2D" parent="mapa/background/boreal" unique_id=437370603]
-position = Vector2(367.00003, 144)
+[node name="Sprite2D" type="Sprite2D" parent="mapa" unique_id=437370603]
+position = Vector2(496.00003, 61.000008)
 scale = Vector2(0.51, 0.51)
 texture = ExtResource("6_edhv1")
 
-[node name="Sprite2D2" type="Sprite2D" parent="mapa/background/boreal" unique_id=193713813]
-position = Vector2(242, 156)
+[node name="Sprite2D2" type="Sprite2D" parent="mapa" unique_id=193713813]
+position = Vector2(316, 168)
 texture = ExtResource("7_qtyh8")
 
-[node name="Sprite2D3" type="Sprite2D" parent="mapa/background/boreal" unique_id=566845913]
-visible = false
-position = Vector2(125, 243)
+[node name="Sprite2D3" type="Sprite2D" parent="mapa" unique_id=566845913]
+position = Vector2(166, 204)
 scale = Vector2(0.48000008, 0.6864342)
 texture = ExtResource("8_2k310")
 
-[node name="tempestade_de_neve" type="ColorRect" parent="mapa/background" unique_id=1975925190]
-material = SubResource("ShaderMaterial_3ldwi")
-offset_left = -239.0
-offset_top = -135.0
-offset_right = 241.0
-offset_bottom = 134.0
+[node name="StaticBody2D" type="StaticBody2D" parent="mapa" unique_id=68793476]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2143602960]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mapa/StaticBody2D" unique_id=1138602383]
+position = Vector2(240, 341)
+shape = SubResource("RectangleShape2D_q44uo")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="mapa/StaticBody2D" unique_id=1850163877]
+position = Vector2(731.75, 86.25)
+shape = SubResource("RectangleShape2D_gs6ou")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="mapa/StaticBody2D" unique_id=1056290243]
+position = Vector2(-246, 85)
+shape = SubResource("RectangleShape2D_gs6ou")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="mapa/StaticBody2D" unique_id=677470293]
+position = Vector2(240, -82.75)
+shape = SubResource("RectangleShape2D_30m1w")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="mapa" unique_id=2143602960]
 stream = ExtResource("5_3ldwi")
 volume_db = -10.947
 autoplay = true
 parameters/looping = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=68793476]
+[node name="BossHUD" parent="mapa" unique_id=16042669 instance=ExtResource("8_edhv1")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1138602383]
-position = Vector2(240, 253)
-shape = SubResource("RectangleShape2D_q44uo")
+[node name="boreal" type="ColorRect" parent="mapa" unique_id=1897435695]
+material = SubResource("ShaderMaterial_qi0ky")
+offset_left = -211.99998
+offset_top = -116.0
+offset_right = 224.00002
+offset_bottom = 89.0
+scale = Vector2(2.1599998, 1)
 
-[node name="BossHUD" parent="." unique_id=16042669 instance=ExtResource("8_edhv1")]
+[node name="estrelas" type="ColorRect" parent="mapa" unique_id=1258232730]
+material = SubResource("ShaderMaterial_6rgyr")
+offset_left = -271.0
+offset_top = -120.0
+offset_right = 208.0
+offset_bottom = 149.0
+scale = Vector2(2.1332574, 0.64424324)
+
+[node name="tempestade_de_neve" type="ColorRect" parent="mapa" unique_id=1975925190]
+material = SubResource("ShaderMaterial_3ldwi")
+offset_left = -270.0
+offset_top = -120.0
+offset_right = 210.0
+offset_bottom = 149.0
+scale = Vector2(2.129639, 1.8792162)
+
+[node name="Estrelas" type="ColorRect" parent="." unique_id=1407494766]
+z_index = -1
+material = SubResource("ShaderMaterial_2k310")
+offset_left = -645.0
+offset_top = -405.0
+offset_right = -605.0
+offset_bottom = -365.0
+scale = Vector2(44.72, 27.44)
+color = Color(0, 0, 0, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=989621805]
+z_index = -3
+offset_left = -645.0
+offset_top = -405.0
+offset_right = -605.0
+offset_bottom = -365.0
+scale = Vector2(45.12, 26.880001)
+color = Color(0, 0, 0, 1)
+
+[node name="aura" type="ColorRect" parent="." unique_id=1938697463]
+z_index = -1
+material = SubResource("ShaderMaterial_30m1w")
+offset_left = -588.00006
+offset_top = -358.00003
+offset_right = -548.00006
+offset_bottom = -318.00003
+scale = Vector2(41.364983, 23.442719)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1346854495]
+visible = false
+material = SubResource("ShaderMaterial_3ilq6")
+offset_left = -265.0
+offset_top = -119.00001
+offset_right = -225.0
+offset_bottom = -79.00001
+scale = Vector2(25.520004, 12.777338)

@@ -485,5 +485,10 @@ wait_time = 2.0
 position = Vector2(29, 1)
 shape = SubResource("RectangleShape2D_iatee")
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=337614421]
+position = Vector2(0, -52)
+zoom = Vector2(0.7, 0.7)
+rotation_smoothing_enabled = true
+
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

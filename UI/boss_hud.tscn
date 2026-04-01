@@ -20,11 +20,11 @@ final_textures = Array[Texture2D]([ExtResource("8_8acu8")])
 
 [node name="BarIcon" type="TextureRect" parent="." unique_id=909319329]
 texture_filter = 1
-offset_left = 3.999998
-offset_top = 3.0000002
-offset_right = 514.0
-offset_bottom = 60.0
-scale = Vector2(0.9072398, 0.9072398)
+offset_left = 98.0
+offset_top = 1.0
+offset_right = 608.0
+offset_bottom = 58.0
+scale = Vector2(0.5410716, 0.4763051)
 texture = ExtResource("7_hwqqm")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="BarIcon" unique_id=1153529072]
@@ -44,10 +44,11 @@ offset_top = 27.55611
 offset_right = 463.26184
 offset_bottom = 50.55611
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=744669295]
+[node name="TextureRect" type="TextureRect" parent="BarIcon" unique_id=744669295]
 texture_filter = 1
-offset_left = 111.0
-offset_top = 33.0
-offset_right = 366.0
-offset_bottom = 73.0
+layout_mode = 0
+offset_left = 123.82835
+offset_top = 33.591915
+offset_right = 378.82834
+offset_bottom = 73.59192
 texture = ExtResource("10_8acu8")

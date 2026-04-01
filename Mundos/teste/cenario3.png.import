@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8d4tqa3vcq0n"
-path="res://.godot/imported/cenario.png-99e83f44efd7e59c2d44329ad0a1bead.ctex"
+uid="uid://b1ilhxaxy210d"
+path="res://.godot/imported/cenario3.png-c4e774515c6232bd63e8b4b32f3e1a10.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Mundos/cenario.png"
-dest_files=["res://.godot/imported/cenario.png-99e83f44efd7e59c2d44329ad0a1bead.ctex"]
+source_file="res://Mundos/teste/cenario3.png"
+dest_files=["res://.godot/imported/cenario3.png-c4e774515c6232bd63e8b4b32f3e1a10.ctex"]
 
 [params]
 
