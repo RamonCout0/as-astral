@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://cqlkwova4r0iq" path="res://Assets/Player/Cena/player.tscn" id="8_q44uo"]
 [ext_resource type="Shader" uid="uid://bylvdmycv0t53" path="res://Shaders_Efeitos/aura.gdshader" id="12_gs6ou"]
 [ext_resource type="Shader" uid="uid://l7a8eodn1c3v" path="res://Shaders_Efeitos/rascunho.gdshader" id="13_30m1w"]
+[ext_resource type="Script" uid="uid://ci4ikhc5tcpgk" path="res://Assets/Player/Cena/node_2d.gd" id="14_3ilq6"]
+[ext_resource type="PackedScene" uid="uid://b5q3hnmijlhmh" path="res://Armotheus.tscn" id="15_pw8b5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q44uo"]
 size = Vector2(1024, 102)
@@ -90,6 +92,26 @@ texture = ExtResource("1_2k310")
 
 [node name="Player" parent="mapa" unique_id=1148920940 instance=ExtResource("8_q44uo")]
 position = Vector2(27, 197)
+
+[node name="Node2D2" type="Node2D" parent="mapa/Player" unique_id=1885814167 node_paths=PackedStringArray("jogador_camera", "area_limite")]
+position = Vector2(-27, -197)
+script = ExtResource("14_3ilq6")
+jogador_camera = NodePath("Camera2D")
+area_limite = NodePath("ReferenceRect")
+
+[node name="Camera2D" type="Camera2D" parent="mapa/Player/Node2D2" unique_id=497144332]
+position = Vector2(0, 5)
+zoom = Vector2(0.7, 0.7)
+limit_left = 0
+limit_top = 0
+limit_right = 0
+limit_bottom = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="mapa/Player/Node2D2" unique_id=15633602]
+offset_left = -226.0
+offset_top = -48.0
+offset_right = 712.0
+offset_bottom = 290.0
 
 [node name="BossTeste" parent="mapa" unique_id=104191071 instance=ExtResource("5_78w70")]
 position = Vector2(322, 232)
@@ -194,3 +216,6 @@ offset_top = -119.00001
 offset_right = -225.0
 offset_bottom = -79.00001
 scale = Vector2(25.520004, 12.777338)
+
+[node name="Armotheus" parent="." unique_id=1719834318 instance=ExtResource("15_pw8b5")]
+position = Vector2(358, 55)

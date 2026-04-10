@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d2sgxk1pwsg6f"]
+
+[ext_resource type="CSharpScript" path="res://Entidades/Armotheus/LaserEscarlate.cs" id="1_laser"]
+
+[node name="LaserEscarlate" type="Node2D" unique_id=1650856468]
+script = ExtResource("1_laser")

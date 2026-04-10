@@ -11,10 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://8mc3xd7gr716" path="res://UI/barra 0.png" id="8_8acu8"]
 [ext_resource type="Texture2D" uid="uid://d0aqltne8ahsw" path="res://UI/stagger_bar.png" id="10_8acu8"]
 
-[node name="BossHUD" type="CanvasLayer" unique_id=16042669 node_paths=PackedStringArray("bar_count_label", "segment_progress_bar")]
+[node name="BossHUD" type="CanvasLayer" unique_id=16042669 node_paths=PackedStringArray("bar_count_label", "segment_progress_bar", "stagger_progress_bar")]
 script = ExtResource("1_lglud")
 bar_count_label = NodePath("BarIcon/BarCountLabel")
 segment_progress_bar = NodePath("BarIcon/TextureProgressBar")
+stagger_progress_bar = NodePath("BarIcon/TextureProgressBar2")
 cycle_textures = Array[Texture2D]([ExtResource("2_ndu07"), ExtResource("3_8jfdx"), ExtResource("4_ttu4m"), ExtResource("5_hwqqm"), ExtResource("6_8acu8")])
 final_textures = Array[Texture2D]([ExtResource("8_8acu8")])
 
@@ -52,3 +53,10 @@ offset_top = 33.591915
 offset_right = 378.82834
 offset_bottom = 73.59192
 texture = ExtResource("10_8acu8")
+
+[node name="TextureProgressBar2" type="TextureProgressBar" parent="BarIcon" unique_id=643914169]
+layout_mode = 0
+offset_left = 162.64021
+offset_top = 50.38787
+offset_right = 340.06586
+offset_bottom = 58.78585
