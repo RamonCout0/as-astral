@@ -9,6 +9,10 @@ const DASH_SPEED = 850.0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+# --- VIDA ---
+var max_health = 10000.0
+var current_health = max_health
+
 # --- ESTADOS ---
 var is_attacking = false
 var is_dashing = false
@@ -32,6 +36,7 @@ const COMBO_WINDOW = 0.6
 func _ready():
 	attack_hitbox.disabled = true
 	anim.animation_finished.connect(_on_animation_finished)
+	EventBus.player_max_health_set.emit(max_health)
 
 func _physics_process(delta):
 	if combo_timer > 0:
@@ -171,7 +176,7 @@ func update_animations():
 		anim.play("Grab")
 	elif is_on_floor():
 		if velocity.x != 0:
-			anim.play("walkking")
+			anim.play("walking")
 		else:
 			anim.play("idle")
 	else:
@@ -204,3 +209,18 @@ func _on_animation_finished(anim_name: StringName) -> void:
 		finalizar_counter()
 	if anim_name == "attack1" or anim_name == "attack2":
 		finalizar_ataque()
+
+func take_damage(amount: float):
+	if is_countering:
+		return  # counter blocks damage
+	
+	current_health -= amount
+	current_health = max(0, current_health)
+	EventBus.player_health_updated.emit(current_health)
+	
+	if current_health <= 0:
+		die()
+
+func die():
+	print("Player morreu!")
+	queue_free()
