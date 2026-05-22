@@ -14,7 +14,7 @@
 [ext_resource type="Shader" uid="uid://bylvdmycv0t53" path="res://Shaders_Efeitos/aura.gdshader" id="12_gs6ou"]
 [ext_resource type="Shader" uid="uid://l7a8eodn1c3v" path="res://Shaders_Efeitos/rascunho.gdshader" id="13_30m1w"]
 [ext_resource type="Script" uid="uid://ci4ikhc5tcpgk" path="res://Assets/Player/Cena/node_2d.gd" id="14_3ilq6"]
-[ext_resource type="PackedScene" uid="uid://b5q3hnmijlhmh" path="res://Armotheus.tscn" id="15_pw8b5"]
+[ext_resource type="PackedScene" uid="uid://b5q3hnmijlhmh" path="res://Entidades/Armotheus/Armotheus.tscn" id="15_pw8b5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q44uo"]
 size = Vector2(1024, 102)
