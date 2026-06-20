@@ -53,12 +53,22 @@ var _did_vassoura := false
 var _did_espelhos := false
 var _counter_flag := false
 
-# --- REFERÊNCIAS --------------------------------------------------------------
-# Visual: aceita tanto AnimatedSprite2D (arte do chapéu Armateus na Fase 1)
-# quanto um ColorRect "Sprite" (placeholder em cubo).
-var _anim      : AnimatedSprite2D = null
+# --- REFERÊNCIAS / FORMAS -----------------------------------------------------
+# Cada fase tem uma "forma". Para usar SEUS sprites, adicione um nó-filho
+# (AnimatedSprite2D ou Sprite2D) no Armotheus.tscn com EXATAMENTE estes nomes:
+#
+#   "Forma_Chapeu"  -> Fase 1 / Transição 1  (Armateus chapéu)
+#   "Forma_Lamina"  -> Fase 2               (Armateus espadachim)
+#   "Forma_Bruxa"   -> Transição 2 / Fase 3 (Silvanna)
+#   "Forma_Final"   -> Fase Final           (Zero Absoluto)
+#
+# Se a forma existir, ela é mostrada (e, sendo AnimatedSprite2D, toca "idle"/
+# "attack"/"laser_warn"/"laser_fire"). Se NÃO existir, cai no cubo placeholder.
+# Compatibilidade: um nó chamado "AnimatedSprite2D" também vale como "Forma_Chapeu".
+var _forms     : Dictionary = {}        # nome_forma -> nó
+var _cur_form  : Node = null            # forma atualmente visível
 var _rect      : ColorRect = null
-var _body_cube : ColorRect = null   # cubo placeholder de corpo por fase
+var _body_cube : ColorRect = null       # cubo placeholder usado quando falta a arte
 var _player    : CharacterBody2D = null
 
 const HAZARD := preload("res://Entidades/Silvana/silvanna_hazard.gd")
@@ -73,10 +83,22 @@ func _ready() -> void:
 	randomize()
 	add_to_group("boss")
 
-	_anim = get_node_or_null("AnimatedSprite2D")
-	_rect = get_node_or_null("Sprite")
+	# Mapeia as formas pelos nomes (qualquer uma pode faltar -> usa cubo).
+	_forms = {
+		"chapeu": get_node_or_null("Forma_Chapeu"),
+		"lamina": get_node_or_null("Forma_Lamina"),
+		"bruxa":  get_node_or_null("Forma_Bruxa"),
+		"final":  get_node_or_null("Forma_Final"),
+	}
+	# Compatibilidade: usa o "AnimatedSprite2D" existente como chapéu.
+	if _forms["chapeu"] == null:
+		_forms["chapeu"] = get_node_or_null("AnimatedSprite2D")
+	for k in _forms:
+		if _forms[k]:
+			_forms[k].visible = false
 
-	# Corpo placeholder: reusa o ColorRect "Sprite" se existir, senão cria um cubo.
+	# Cubo placeholder: reusa o ColorRect "Sprite" se existir, senão cria um.
+	_rect = get_node_or_null("Sprite")
 	if _rect:
 		_body_cube = _rect
 	else:
@@ -84,7 +106,7 @@ func _ready() -> void:
 		_body_cube.size     = Vector2(44.0, 44.0)
 		_body_cube.position = Vector2(-22.0, -22.0)
 		add_child(_body_cube)
-	_body_cube.visible = (_anim == null)   # com arte, começa escondido (Fase 1 usa o chapéu)
+	_body_cube.visible = false
 
 	_player = get_tree().get_first_node_in_group("player")
 	if _player == null:
@@ -97,6 +119,7 @@ func _ready() -> void:
 		EventBus.player_counter_pressed.connect(func(): _counter_flag = true)
 
 	global_position = _idle_pos()
+	_set_body("chapeu", Color(0.6, 0.1, 0.1))
 	_play_anim("idle")
 
 	_fight()   # corrotina mestra
@@ -136,7 +159,7 @@ func _fight() -> void:
 # ─────────────────────────────────────────────────────────────────────────
 func _phase_1() -> void:
 	_banner("FASE 1: O Prelúdio", Color(0.6, 0.1, 0.1))
-	_set_body(true, Color(0.6, 0.1, 0.1))   # chapéu Armateus (arte)
+	_set_body("chapeu", Color(0.6, 0.1, 0.1))   # Armateus chapéu
 	var i := 0
 	while _alive() and current_hp > TH_TRANS1:
 		match i % 3:
@@ -245,13 +268,14 @@ func _atk_chuva_de_gelo() -> void:
 # ─────────────────────────────────────────────────────────────────────────
 func _trans_1() -> void:
 	_banner("TRANSIÇÃO 1: O Vórtice de Sucção", Color(0.3, 0.0, 0.5))
-	_set_body(false, Color(0.5, 0.1, 0.7))   # roxo
+	_set_body("chapeu", Color(0.5, 0.1, 0.7))   # ainda Armateus (chapéu)
 	is_immune = true
 	await _move_to(Vector2(_arena_center().x, arena_floor - 20.0), 200.0)
 	_reset_stagger()
 
 	# Núcleo letal no centro (encostar = wipe)
-	var core := _spawn_hazard(global_position, Vector2(34.0, 34.0), Color(0.6, 0.0, 0.8), 0.0, 30.0, 0.0, false, true)
+	# Núcleo letal no centro: tele 0.3s, ativo 30s, sem dash, instakill (encostar = morte).
+	var core := _spawn_hazard(global_position, Vector2(34.0, 34.0), Color(0.6, 0.0, 0.8), 0.0, 0.3, 30.0, 0.0, false, true)
 
 	var dt := get_physics_process_delta_time()
 	var t := 0.0
@@ -280,7 +304,7 @@ func _trans_1() -> void:
 # ─────────────────────────────────────────────────────────────────────────
 func _phase_2() -> void:
 	_banner("FASE 2: A Lâmina Sombria", Color(0.1, 0.2, 0.7))
-	_set_body(false, Color(0.2, 0.3, 0.9))   # azul (espadachim)
+	_set_body("lamina", Color(0.2, 0.3, 0.9))   # Armateus espadachim
 	var i := 0
 	while _alive() and current_hp > TH_TRANS2:
 		match i % 3:
@@ -354,7 +378,7 @@ func _atk_chuva_de_espadas() -> void:
 # ─────────────────────────────────────────────────────────────────────────
 func _trans_2() -> void:
 	_banner("TRANSIÇÃO 2: A Fúria da Bruxa", Color(0.0, 0.4, 0.6))
-	_set_body(false, Color(0.0, 0.5, 0.6))   # teal
+	_set_body("bruxa", Color(0.0, 0.5, 0.6))   # Silvanna surge
 	is_immune = true
 	await _move_to(_arena_center(), 220.0)
 	# Durante a janela fica vulnerável para o player encher o stagger
@@ -372,11 +396,12 @@ func _trans_2() -> void:
 		if laser_cd <= 0.0:
 			laser_cd = 1.1
 			var h := randf_range(arena_top + 30.0, arena_floor - 10.0)
+			# damage, telegrafo, ativo. Dá pra desviar pulando/agachando OU com dash (I-frame).
 			_spawn_hazard(
 				Vector2(_arena_center().x, h),
 				Vector2(arena_right - arena_left, 8.0),
 				Color(1.0, 0.2, 0.2),
-				1500.0, 0.5, 0.6, true, false)
+				1500.0, 0.8, 0.5)
 		if stagger >= MAX_STAGGER:
 			success = true
 			break
@@ -393,7 +418,7 @@ func _trans_2() -> void:
 # ─────────────────────────────────────────────────────────────────────────
 func _phase_3() -> void:
 	_banner("FASE 3: A Tempestade Prateada", Color(0.7, 0.7, 0.8))
-	_set_body(false, Color(0.85, 0.85, 0.95))   # prata (Silvanna)
+	_set_body("bruxa", Color(0.85, 0.85, 0.95))   # Silvanna (prata)
 	var i := 0
 	while _alive() and current_hp > TH_FINAL:
 		# Gatilhos únicos por HP
@@ -443,10 +468,11 @@ func _event_vassoura() -> void:
 	_banner("Vassoura Empurradora", Color(0.6, 0.8, 0.9))
 	await _move_to(Vector2(arena_right - 20.0, arena_floor - 20.0), 260.0)
 	# Espinhos letais na parede esquerda
+	# Espinhos letais na parede esquerda: tele 0.3s, ativos 8s, instakill.
 	var spikes := _spawn_hazard(
 		Vector2(arena_left + 8.0, (arena_top + arena_floor) * 0.5),
 		Vector2(16.0, arena_floor - arena_top),
-		Color(0.7, 0.7, 0.7), 0.0, 8.0, 0.0, false, true)
+		Color(0.7, 0.7, 0.7), 0.0, 0.3, 8.0, 0.0, false, true)
 
 	var dt := get_physics_process_delta_time()
 	var t := 0.0
@@ -468,7 +494,7 @@ func _event_vassoura() -> void:
 		_player.take_damage(3000.0)
 
 	if is_instance_valid(spikes): spikes.queue_free()
-	_set_body(false, Color(0.85, 0.85, 0.95))   # volta à prata
+	_set_body("bruxa", Color(0.85, 0.85, 0.95))   # volta à Silvanna
 
 
 # Espelhos Gêmeos (gatilho 140x): só pode bater no clone da cor OPOSTA ao ícone.
@@ -502,7 +528,7 @@ func _event_espelhos_gemeos() -> void:
 # ─────────────────────────────────────────────────────────────────────────
 func _phase_final() -> void:
 	_banner("FASE FINAL: O Zero Absoluto", Color(0.85, 0.95, 1.0))
-	_set_body(false, Color(0.7, 0.95, 1.0))   # gelo
+	_set_body("final", Color(0.7, 0.95, 1.0))   # Zero Absoluto
 	await _move_to(_arena_center() + Vector2(0, -30), 240.0)
 
 	# Nevasca visual (cubo translúcido cobrindo a arena)
@@ -667,38 +693,41 @@ func _idle_pos() -> Vector2:
 	return Vector2((arena_left + arena_right) * 0.5, arena_floor - hover_height)
 
 
-# Troca a "forma" do boss: arte (chapéu) ou cubo de cor por fase.
-# Se não houver arte, sempre mostra o cubo. `color` só é usado quando o cubo aparece.
-func _set_body(use_art: bool, color: Color) -> void:
-	var show_art := use_art and _anim != null
-	if _anim:
-		_anim.visible = show_art
-		_anim.modulate = Color.WHITE
+# Troca a forma do boss. Mostra o sprite da forma se existir; senão o cubo `color`.
+func _set_body(form: String, color: Color) -> void:
+	# esconde todas as formas e o cubo
+	for k in _forms:
+		if _forms[k]:
+			_forms[k].visible = false
 	if _body_cube:
-		_body_cube.visible = not show_art
-		if not show_art:
-			_body_cube.color = color
+		_body_cube.visible = false
+
+	_cur_form = _forms.get(form)
+	if _cur_form:
+		_cur_form.visible = true
+		if _cur_form is CanvasItem:
+			_cur_form.modulate = Color.WHITE
+		_play_anim("idle")
+	elif _body_cube:
+		_body_cube.visible = true
+		_body_cube.color = color
 
 
 # Tinta momentânea (brilho de counter, morte) na forma atualmente visível.
 func _set_color(c: Color) -> void:
-	if _anim and _anim.visible:
-		_anim.modulate = c
-	if _body_cube and _body_cube.visible:
+	if _cur_form and _cur_form.visible and _cur_form is CanvasItem:
+		_cur_form.modulate = c
+	elif _body_cube and _body_cube.visible:
 		_body_cube.color = c
 
 
+# Toca uma animação na forma atual, se ela for um AnimatedSprite2D que a tenha.
 func _play_anim(anim_name: String) -> void:
-	if not _anim:
-		return
-	if _anim.sprite_frames and _anim.sprite_frames.has_animation(anim_name):
-		_anim.play(anim_name)
+	if _cur_form is AnimatedSprite2D:
+		var sf : SpriteFrames = _cur_form.sprite_frames
+		if sf and sf.has_animation(anim_name):
+			_cur_form.play(anim_name)
 
 
-func _banner(text: String, c: Color) -> void:
+func _banner(text: String, _c: Color) -> void:
 	print("[Silvanna] >>> ", text)
-	# Tinta só o cubo placeholder; a arte (AnimatedSprite2D) fica na cor natural.
-	if _rect:
-		_rect.color = c
-	if _anim:
-		_anim.modulate = Color.WHITE
