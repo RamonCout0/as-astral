@@ -11,7 +11,11 @@ config_version=5
 [application]
 
 config/name="As astral"
+<<<<<<< HEAD
 run/main_scene="uid://bpjpto7ownwe8"
+=======
+run/main_scene="uid://cqlkwova4r0iq"
+>>>>>>> 60d7a9bf3e8e4852ff2c218fa3df1a80b47ce27d
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

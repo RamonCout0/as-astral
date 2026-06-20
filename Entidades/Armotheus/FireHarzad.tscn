@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cqpvvina0oieo"]
+
+[ext_resource type="Script" uid="uid://cguyekn4q3uy5" path="res://Entidades/Armotheus/fire_harzad.gd" id="1_evxyy"]
+
+[node name="FireHazard" type="Area2D" unique_id=1936653966]
+script = ExtResource("1_evxyy")
