@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://b0silvtest01a"]
+
+[ext_resource type="PackedScene" uid="uid://cqlkwova4r0iq" path="res://Assets/Player/Cena/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://dggilkv3yeli0" path="res://UI/boss_hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" uid="uid://bns87d4kqjy85" path="res://Entidades/Silvana/silvanna.tscn" id="3_silv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(480, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(12, 280)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceil"]
+size = Vector2(480, 12)
+
+[node name="SilvannaTeste" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 480.0
+offset_bottom = 270.0
+color = Color(0.07, 0.07, 0.11, 1)
+
+[node name="Arena" type="StaticBody2D" parent="."]
+
+[node name="Floor" type="CollisionShape2D" parent="Arena"]
+position = Vector2(240, 262)
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="WallLeft" type="CollisionShape2D" parent="Arena"]
+position = Vector2(10, 135)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRight" type="CollisionShape2D" parent="Arena"]
+position = Vector2(470, 135)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Ceiling" type="CollisionShape2D" parent="Arena"]
+position = Vector2(240, 10)
+shape = SubResource("RectangleShape2D_ceil")
+
+[node name="FloorVisual" type="ColorRect" parent="."]
+offset_left = 0.0
+offset_top = 252.0
+offset_right = 480.0
+offset_bottom = 272.0
+color = Color(0.15, 0.15, 0.2, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(60, 240)
+
+[node name="Silvanna" parent="." instance=ExtResource("3_silv")]
+position = Vector2(240, 120)
+
+[node name="BossHUD" parent="." instance=ExtResource("2_hud")]

@@ -11,7 +11,7 @@ var _player : Node = null
 func _ready() -> void:
 	_player = get_tree().get_first_node_in_group("player")
 	collision_layer = 0
-	collision_mask  = 2
+	collision_mask  = 1  # player usa a layer 1 padrão
 
 	# Visual placeholder — cabeça de dragão laranja
 	var vis := ColorRect.new()
@@ -19,6 +19,13 @@ func _ready() -> void:
 	vis.position = Vector2(-14.0, -10.0)
 	vis.color    = Color(1.0, 0.4, 0.0, 0.9)
 	add_child(vis)
+
+	# Hitbox
+	var shape := CollisionShape2D.new()
+	var rect := RectangleShape2D.new()
+	rect.size = Vector2(28.0, 20.0)
+	shape.shape = rect
+	add_child(shape)
 
 	body_entered.connect(_on_body_hit)
 

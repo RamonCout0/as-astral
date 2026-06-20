@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cqpvvina0oieo"]
 
-[ext_resource type="CSharpScript" path="res://Entidades/Armotheus/FireHazard.cs" id="1_fire"]
+[ext_resource type="Script" uid="uid://cm5wxwpgpisol" path="res://Entidades/Armotheus/fire_hazard.gd" id="1_fire"]
 
 [node name="FireHazard" type="Area2D" unique_id=1936653966]
 script = ExtResource("1_fire")

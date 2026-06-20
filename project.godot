@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="As astral"
-run/main_scene="uid://cqlkwova4r0iq"
-config/features=PackedStringArray("4.6", "C#", "Forward Plus")
+run/main_scene="uid://bpjpto7ownwe8"
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -26,10 +26,6 @@ window/size/viewport_height=270
 window/size/window_width_override=1152
 window/size/window_height_override=780
 window/stretch/mode="canvas_items"
-
-[dotnet]
-
-project/assembly_name="As astral"
 
 [editor]
 

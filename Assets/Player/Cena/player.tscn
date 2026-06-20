@@ -460,6 +460,7 @@ _data = {
 size = Vector2(26, 60)
 
 [node name="Player" type="CharacterBody2D" unique_id=1148920940 groups=["player"]]
+platform_on_leave = 2
 script = ExtResource("1_dypck")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=188367016]

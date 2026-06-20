@@ -5,7 +5,6 @@
 [ext_resource type="Shader" uid="uid://1f13fi2w81c6" path="res://Shaders_Efeitos/tempestade_neve.gdshader" id="2_0q8jj"]
 [ext_resource type="Shader" uid="uid://bu8vcek0co4pl" path="res://Shaders_Efeitos/estrelas.gdshader" id="3_3ldwi"]
 [ext_resource type="AudioStream" uid="uid://drxwb871dofkm" path="res://Musicas/[로스트아크｜OST] 고통의 마녀, 세르카 (Serca, Malefica Doloris) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3" id="5_3ldwi"]
-[ext_resource type="PackedScene" uid="uid://cvvtf1t0i3sub" path="res://Mundos/teste/boss_teste.tscn" id="5_78w70"]
 [ext_resource type="Texture2D" uid="uid://dek6xw41xrfr0" path="res://Assets/Boss/bruxa.png" id="6_edhv1"]
 [ext_resource type="Texture2D" uid="uid://6arhby255gam" path="res://Assets/Boss/Armotheus.png" id="7_qtyh8"]
 [ext_resource type="Texture2D" uid="uid://bnjyskfyed8am" path="res://Assets/meme/Felipão.png" id="8_2k310"]
@@ -113,9 +112,6 @@ offset_top = -48.0
 offset_right = 712.0
 offset_bottom = 290.0
 
-[node name="BossTeste" parent="mapa" unique_id=104191071 instance=ExtResource("5_78w70")]
-position = Vector2(322, 232)
-
 [node name="Sprite2D" type="Sprite2D" parent="mapa" unique_id=437370603]
 position = Vector2(496.00003, 61.000008)
 scale = Vector2(0.51, 0.51)
@@ -218,4 +214,7 @@ offset_bottom = -79.00001
 scale = Vector2(25.520004, 12.777338)
 
 [node name="Armotheus" parent="." unique_id=1719834318 instance=ExtResource("15_pw8b5")]
-position = Vector2(358, 55)
+position = Vector2(240, 255)
+arena_top = 120.0
+arena_floor = 285.0
+hover_height = 30.0
