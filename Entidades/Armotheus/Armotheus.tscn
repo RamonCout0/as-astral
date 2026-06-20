@@ -1,14 +1,8 @@
 [gd_scene format=3 uid="uid://b5q3hnmijlhmh"]
 
-<<<<<<< HEAD:Armotheus.tscn
 [ext_resource type="Script" uid="uid://b7ltsh403f06" path="res://silvanna.gd" id="1_csarm"]
-=======
-[ext_resource type="Script" uid="uid://b00ljqcg21svm" path="res://Entidades/Armotheus/armotheus.gd" id="1_xg36d"]
-[ext_resource type="PackedScene" uid="uid://d2sgxk1pwsg6f" path="res://Entidades/Armotheus/LaserEscarlate.tscn" id="2_fld08"]
->>>>>>> 60d7a9bf3e8e4852ff2c218fa3df1a80b47ce27d:Entidades/Armotheus/Armotheus.tscn
 [ext_resource type="Texture2D" uid="uid://bugc6hsk3i22u" path="res://Entidades/Armotheus/attack_armotheus-Sheet.png" id="2_xg36d"]
 [ext_resource type="Texture2D" uid="uid://m5kjmwsuleg6" path="res://Entidades/Armotheus/animation do armotheus fase idle-Sheet.png" id="3_4rxjs"]
-[ext_resource type="PackedScene" uid="uid://cqpvvina0oieo" path="res://Entidades/Armotheus/FireHarzad.tscn" id="3_kh8h7"]
 [ext_resource type="Texture2D" uid="uid://blfclt26twd54" path="res://Entidades/Armotheus/laser-Sheet.png" id="4_085h8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_atk0"]
@@ -199,13 +193,7 @@ size = Vector2(59, 43)
 size = Vector2(59, 43)
 
 [node name="Armotheus" type="CharacterBody2D" unique_id=1719834318]
-<<<<<<< HEAD:Armotheus.tscn
 script = ExtResource("1_csarm")
-=======
-script = ExtResource("1_xg36d")
-laser_scene = ExtResource("2_fld08")
-fire_hazard_scene = ExtResource("3_kh8h7")
->>>>>>> 60d7a9bf3e8e4852ff2c218fa3df1a80b47ce27d:Entidades/Armotheus/Armotheus.tscn
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1345082892]
 texture_filter = 1

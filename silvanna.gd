@@ -463,7 +463,7 @@ func _event_vassoura() -> void:
 		return _player != null and _player.global_position.x > _arena_center().x
 	var ok := await _await_counter(1.2, valid)
 	if ok:
-		_add_stagger(MAX_STAGGER)   # atordoa
+		add_stagger(MAX_STAGGER)   # atordoa
 	elif _alive() and _player:
 		_player.take_damage(3000.0)
 
@@ -560,11 +560,14 @@ func take_damage(amount: float) -> void:
 	if not is_immune:
 		current_hp = max(0.0, current_hp - amount)
 		EventBus.boss_health_updated.emit(current_hp)
-	# Stagger acumula sempre (inclusive nas transições, que são gates de stagger)
-	_add_stagger(amount * 0.5)
+	# O stagger NÃO vem mais automático daqui — é o golpe do player que o gera
+	# (ver add_stagger, chamado pelo player.gd). As transições são gates de stagger.
 
 
-func _add_stagger(amount: float) -> void:
+# Público: o player chama isto junto do dano base para encher a barra de stagger.
+func add_stagger(amount: float) -> void:
+	if state == State.DEAD:
+		return
 	stagger = min(MAX_STAGGER, stagger + amount)
 	EventBus.boss_stagger_updated.emit(stagger, MAX_STAGGER)
 

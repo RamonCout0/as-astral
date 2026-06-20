@@ -14,6 +14,7 @@
 [ext_resource type="Shader" uid="uid://l7a8eodn1c3v" path="res://Shaders_Efeitos/rascunho.gdshader" id="13_30m1w"]
 [ext_resource type="Script" uid="uid://ci4ikhc5tcpgk" path="res://Assets/Player/Cena/node_2d.gd" id="14_3ilq6"]
 [ext_resource type="PackedScene" uid="uid://b5q3hnmijlhmh" path="res://Entidades/Armotheus/Armotheus.tscn" id="15_pw8b5"]
+[ext_resource type="PackedScene" uid="uid://b0playerhud01a" path="res://UI/player_hud.tscn" id="16_phud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q44uo"]
 size = Vector2(1024, 102)
@@ -218,3 +219,5 @@ position = Vector2(240, 255)
 arena_top = 120.0
 arena_floor = 285.0
 hover_height = 30.0
+
+[node name="PlayerHUD" parent="." instance=ExtResource("16_phud")]

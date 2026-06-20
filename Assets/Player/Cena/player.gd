@@ -7,6 +7,9 @@ const WALL_CLIMB_SPEED = 160.0
 const WALL_SLIDE_SPEED = 100.0
 const DASH_SPEED = 850.0
 
+# Stagger gerado por golpe = dano base * STAGGER_RATIO (vai para a barra de postura do boss)
+const STAGGER_RATIO = 0.6
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # --- VIDA ---
@@ -36,7 +39,8 @@ const COMBO_WINDOW = 0.6
 func _ready():
 	attack_hitbox.disabled = true
 	anim.animation_finished.connect(_on_animation_finished)
-	EventBus.player_max_health_set.emit(max_health)
+	# Deferido: garante que a HUD já conectou aos sinais antes do valor inicial chegar.
+	EventBus.player_max_health_set.emit.call_deferred(max_health)
 
 func _physics_process(delta):
 	if combo_timer > 0:
@@ -189,11 +193,13 @@ func update_animations():
 func _on_attack_hitbox_area_entered(area):
 	# Se a área que atingimos for a 'Hurtbox' de um Boss
 	if area.name == "Hurtbox":
-		var boss = area.get_parent() # Pega o nó BossTeste
+		var boss = area.get_parent() # Pega o nó do Boss
 		if boss.has_method("take_damage"):
-			# Golpe normal dá 20, se for o segundo golpe do combo dá 40!
+			# Golpe normal dá 1000, se for o segundo golpe do combo dá 2000!
 			var damage = 1000.0 if combo_step == 1 else 2000.0
 			boss.take_damage(damage)
+			if boss.has_method("add_stagger"):
+				boss.add_stagger(damage * STAGGER_RATIO)
 
 
 func _on_attack_hitbox_body_entered(body):
@@ -202,7 +208,9 @@ func _on_attack_hitbox_body_entered(body):
 		if body.has_method("take_damage"):
 			var damage = 1000.0 if combo_step <= 1 else 2000.0
 			body.take_damage(damage)
-			print("Bateu no corpo do Boss! Dano: ", damage)
+			if body.has_method("add_stagger"):
+				body.add_stagger(damage * STAGGER_RATIO)
+			print("Bateu no corpo do Boss! Dano: ", damage, " | Stagger: ", damage * STAGGER_RATIO)
 			
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "counter":
