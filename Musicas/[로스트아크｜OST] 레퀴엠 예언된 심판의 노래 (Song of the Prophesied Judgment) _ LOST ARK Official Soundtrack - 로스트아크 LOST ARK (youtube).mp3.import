@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bpy2hbngk8kcb"
+path="res://.godot/imported/[로스트아크｜OST] 레퀴엠 예언된 심판의 노래 (Song of the Prophesied Judgment) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3-5fe6122f2798b8699416af0082d976f7.mp3str"
+
+[deps]
+
+source_file="res://Musicas/[로스트아크｜OST] 레퀴엠 예언된 심판의 노래 (Song of the Prophesied Judgment) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3"
+dest_files=["res://.godot/imported/[로스트아크｜OST] 레퀴엠 예언된 심판의 노래 (Song of the Prophesied Judgment) _ LOST ARK Official Soundtrack - 로스트아크 LOST ARK (youtube).mp3-5fe6122f2798b8699416af0082d976f7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

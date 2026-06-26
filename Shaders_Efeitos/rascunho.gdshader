@@ -1,4 +1,4 @@
-shader_type canvas_item;
+hader_type canvas_item;
 
 // --- Configurações do Grafite Denso (Estilo Carvão) ---
 uniform vec4 pencil_color : source_color = vec4(0.2, 0.2, 0.2, 1.0); // Cor do grafite escuro

@@ -462,6 +462,7 @@ size = Vector2(26, 60)
 [node name="Player" type="CharacterBody2D" unique_id=1148920940 groups=["player"]]
 platform_on_leave = 2
 script = ExtResource("1_dypck")
+heavy_cooldown = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=188367016]
 position = Vector2(2, 7)
@@ -481,6 +482,8 @@ autoplay = &"idle"
 wait_time = 2.0
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=1505255986]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=1672550890]
 position = Vector2(29, 1)

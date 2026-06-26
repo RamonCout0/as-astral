@@ -10,10 +10,22 @@ const DASH_SPEED = 850.0
 # Stagger gerado por golpe = dano base * STAGGER_RATIO (vai para a barra de postura do boss)
 const STAGGER_RATIO = 0.6
 
+# --- GOLPE PESADO (tecla V): lento, stagger altíssimo, cooldown alto, alcance grande ---
+const SPIN_ATTACK := preload("res://Assets/Player/spin_attack.gd")
+@export_group("Golpe Pesado (V)")
+@export var heavy_cooldown   : float = 7.0     # cooldown alto
+@export var heavy_stagger    : float = 2000.0  # stagger alto (nerfado)
+@export var heavy_damage     : float = 1500.0
+@export var heavy_reach      : float = 220.0   # alcance grande à frente
+@export var heavy_anim_speed : float = 1.7     # velocidade da animação do golpe (rápido)
+var can_heavy := true
+var is_heavy  := false
+var _spin_done := false   # evita spawnar o efeito 2x na mesma animação
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # --- VIDA ---
-var max_health = 10000.0
+var max_health = 100000.0
 var current_health = max_health
 
 # --- ESTADOS ---
@@ -27,6 +39,7 @@ var is_countering := false
 var combo_step = 0
 var combo_timer = 0.0
 const COMBO_WINDOW = 0.6
+@export var attack_speed : float = 1.25   # velocidade das animações de ataque (maior = mais rápido)
 
 @onready var anim = $AnimationPlayer
 @onready var sprite = $Sprite2D
@@ -68,10 +81,14 @@ func _physics_process(delta):
 	move_and_slide()
 	update_animations()
 	handle_counter()
+	handle_heavy()
 
 func handle_movement():
+	if is_heavy:                       # travado durante o golpe pesado
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		return
 	var direction = Input.get_axis("ui_left", "ui_right")
-	
+
 	if direction:
 		velocity.x = direction * SPEED
 		if direction > 0:
@@ -105,7 +122,7 @@ func handle_wall_grab():
 			velocity.y = min(velocity.y, WALL_SLIDE_SPEED)
 
 func handle_dash():
-	if Input.is_action_just_pressed("dash") and can_dash and not is_dashing:
+	if Input.is_action_just_pressed("dash") and can_dash and not is_dashing and not is_heavy:
 		is_dashing = true
 		can_dash = false
 		velocity.y = 0
@@ -125,7 +142,7 @@ func handle_attack():
 	
 
 	if Input.is_action_just_pressed("attack"):
-		if is_attacking:
+		if is_attacking or is_heavy:
 			return
 
 		is_attacking = true
@@ -133,27 +150,62 @@ func handle_attack():
 		
 		if combo_step == 0:
 			combo_step = 1
-			anim.play("attack1")
+			anim.play("attack1", -1, attack_speed)
 		elif combo_step == 1:
 			combo_step = 2
-			anim.play("attack2")
+			anim.play("attack2", -1, attack_speed)
 		else:
 			combo_step = 1
-			anim.play("attack1")
+			anim.play("attack1", -1, attack_speed)
 
 func handle_counter():
-	if Input.is_action_just_pressed("counter") and not is_countering and not is_attacking and not is_dashing:
+	if Input.is_action_just_pressed("counter") and not is_countering and not is_attacking and not is_dashing and not is_heavy:
 		is_countering = true
 		anim.play("counter")
 		EventBus.player_counter_pressed.emit()
+		_counter_feedback()
+
+# Feedback visual do counter: flash azul + "punch" de escala no sprite.
+func _counter_feedback():
+	var tw := create_tween()
+	tw.set_parallel(true)
+	sprite.modulate = Color(0.4, 0.9, 1.0)
+	tw.tween_property(sprite, "modulate", Color.WHITE, 0.3)
+	sprite.scale = Vector2(1.25, 1.25)
+	tw.tween_property(sprite, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func finalizar_counter():
 	is_countering = false
-	
+
+# --- GOLPE PESADO (V) ---
+func handle_heavy():
+	if Input.is_action_just_pressed("heavy") and can_heavy and not is_heavy \
+			and not is_attacking and not is_dashing and not is_countering:
+		do_heavy()
+
+func do_heavy():
+	is_heavy = true
+	can_heavy = false
+	_spin_done = false
+	anim.play("attack2", -1, heavy_anim_speed)
+	_heavy_safety()   # destrava sozinho se a animação não finalizar
+	# O efeito sai SINCRONIZADO com a animação: ativar_hitbox() (track do attack2)
+	# dispara o spin; finalizar_ataque() (track no fim) encerra e inicia o cooldown.
+
+func _spawn_spin():
+	var dir := -1.0 if sprite.flip_h else 1.0
+	var fx = SPIN_ATTACK.new()
+	fx.setup(dir, heavy_stagger, heavy_damage, heavy_reach)
+	add_child(fx)   # nasce na frente do player (segue ele durante o golpe)
+
+
 
 # --- FUNÇÕES DE ANIMAÇÃO (Call Method Track) ---
 func ativar_hitbox():
 	attack_hitbox.disabled = false
+	if is_heavy and not _spin_done:
+		_spin_done = true
+		_spawn_spin()        # spin sai no frame do golpe da animação attack2
 
 func desativar_hitbox():
 	attack_hitbox.disabled = true
@@ -161,9 +213,23 @@ func desativar_hitbox():
 func finalizar_ataque():
 	is_attacking = false
 	desativar_hitbox()
+	if is_heavy:             # fim do golpe pesado -> inicia o cooldown
+		is_heavy = false
+		_start_heavy_cooldown()
+
+func _start_heavy_cooldown():
+	await get_tree().create_timer(heavy_cooldown).timeout
+	can_heavy = true
+
+# Segurança: se a animação não chamar finalizar_ataque, destrava o player.
+func _heavy_safety():
+	await get_tree().create_timer(1.5).timeout
+	if is_heavy:
+		is_heavy = false
+		_start_heavy_cooldown()
 
 func update_animations():
-	if is_attacking:
+	if is_attacking or is_heavy:   # não sobrescreve o attack2 do golpe pesado
 		return
 	
 	if is_countering:

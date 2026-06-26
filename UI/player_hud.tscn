@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0playerhud01a"]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://UI/player_hud.gd" id="1_phud"]
 

@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://buqpps26lm8g6"]
+
+[ext_resource type="Texture2D" uid="uid://cmqyho4xwhj6a" path="res://Assets/Boss/vortice-Sheet.png" id="1_2sebu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j65a3"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gu8gc"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2o24"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2pww"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anxvk"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpxfq"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rx2l8"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2bnj2"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f66wr"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7btch"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dy5h3"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hx81v"]
+atlas = ExtResource("1_2sebu")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_753vd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j65a3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gu8gc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2o24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2pww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anxvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vpxfq")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 17.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rx2l8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2bnj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f66wr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7btch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dy5h3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hx81v")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 17.0
+}]
+
+[node name="Forma_Lamina" type="AnimatedSprite2D" unique_id=1621234048]
+texture_filter = 1
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_753vd")
+animation = &"idle"

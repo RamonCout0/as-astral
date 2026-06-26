@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cqlkwova4r0iq" path="res://Assets/Player/Cena/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://dggilkv3yeli0" path="res://UI/boss_hud.tscn" id="2_hud"]
-[ext_resource type="PackedScene" uid="uid://bns87d4kqjy85" path="res://Entidades/Silvana/silvanna.tscn" id="3_silv"]
-[ext_resource type="PackedScene" uid="uid://b0playerhud01a" path="res://UI/player_hud.tscn" id="4_phud"]
+[ext_resource type="PackedScene" uid="uid://liu866vvcbvw" path="res://Entidades/Armotheus/Armotheus.tscn" id="3_silv"]
+[ext_resource type="PackedScene" path="res://UI/player_hud.tscn" id="4_phud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(480, 20)

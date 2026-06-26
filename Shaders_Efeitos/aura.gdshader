@@ -1,4 +1,4 @@
-shader_type canvas_item;
+hader_type canvas_item;
 
 // --- Configurações Místicas ---
 uniform vec4 aura_color : source_color = vec4(0.4, 0.0, 0.8, 1.0); // Roxo etéreo padrão

@@ -45,18 +45,12 @@ offset_top = 27.55611
 offset_right = 463.26184
 offset_bottom = 50.55611
 
-[node name="TextureRect" type="TextureRect" parent="BarIcon" unique_id=744669295]
-texture_filter = 1
+[node name="TextureProgressBar2" type="TextureProgressBar" parent="BarIcon" unique_id=643914169]
 layout_mode = 0
 offset_left = 123.82835
 offset_top = 33.591915
 offset_right = 378.82834
 offset_bottom = 73.59192
-texture = ExtResource("10_8acu8")
-
-[node name="TextureProgressBar2" type="TextureProgressBar" parent="BarIcon" unique_id=643914169]
-layout_mode = 0
-offset_left = 162.64021
-offset_top = 50.38787
-offset_right = 340.06586
-offset_bottom = 58.78585
+max_value = 5000.0
+texture_progress = ExtResource("10_8acu8")
+tint_progress = Color(1, 0.85, 0.1, 1)
